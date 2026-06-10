@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  # ScyllaDB - Substituto de alta performance para Cassandra
+  scylladb:
+    image: scylladb/scylla:5.2
+    container_name: logs-scylla
+    restart: always
+    ports:
+      - "9042:9042" # Porta nativa (CQL)
+      - "2042:2042" # API de monitoramento
+    # O ScyllaDB tenta usar todos os recursos da máquina por padrão. 
+    # Em dev, limitamos para não travar o SO.
+    command: --smp 1 --memory 1G --overprovisioned 1 --api-address 0.0.0.0
+    volumes:
+      - scylla_data:/var/lib/scylla
+
+  # MongoDB - Para integrações e documentos flexíveis
+  mongodb:
+    image: mongo:6.0
+    container_name: logs-mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=${MONGO_INITDB_DATABASE}
+    volumes:
+      - mongo_data:/data/db
+
+  # PostgreSQL - Para dados relacionais e transacionais
+  postgres:
+    image: postgres:15-alpine
+    container_name: logs-postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  scylla_data:
+  mongo_data:
+  postgres_data:
