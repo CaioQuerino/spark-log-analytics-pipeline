@@ -25,18 +25,18 @@ O projeto simula um ambiente de back-end com foco em dados e integrações, alin
 O pipeline central deste projeto envolve os seguintes passos, ilustrados nas imagens abaixo:
 
 1.  **Ingestão de Dados Brutos (Landing Zone)**: Arquivos CSV de logs são depositados em um bucket S3 na área `raw/logs/`.
-    ![CSV armazenado no Data Lake do Amazon S3](./.docs/imgs/2.png)
+    ![CSV armazenado no Data Lake do Amazon S3](./src/imgs/2.png)
 
 2.  **Orquestração e Detecção de Novos Dados**: Um orquestrador em Python (Boto3) monitora a pasta `raw/logs/` no S3.
     -   Se não houver novos dados, o processo é encerrado.
-        ![Script python não encontrando dados no Data Lake do Amazon S3](./.docs/imgs/4.png)
+        ![Script python não encontrando dados no Data Lake do Amazon S3](./src/imgs/4.png)
     -   Se novos arquivos CSV forem detectados, o job PySpark é iniciado.
-        ![Script python verificando se há dados no Data Lake do Amazon S3](./.docs/imgs/3.1.png)
+        ![Script python verificando se há dados no Data Lake do Amazon S3](./src/imgs/3.1.png)
 
 3.  **Processamento Batch com PySpark**: O job Spark lê os arquivos CSV, aplica transformações (limpeza, padronização, adição de flags) e persiste os dados em formato **Parquet** otimizado para consultas analíticas.
 
 4.  **Movimentação para Arquivo**: Após o processamento bem-sucedido, os arquivos CSV originais são movidos da área `raw/logs/` para `archive/logs/` para evitar reprocessamento e manter a zona de pouso limpa.
-    ![Estrutura de pastas após o processamento: processed e archive](./.docs/imgs/3.2.png)
+    ![Estrutura de pastas após o processamento: processed e archive](./src/imgs/3.2.png)
 
 ## 📚 Progresso do Curso / Laboratórios
 
@@ -58,7 +58,7 @@ Para mais detalhes e execução de cada laboratório, consulte o arquivo de curs
 ## Se tiver dados ele processa os dados e cria duas pastas:
 - Para dados processados e convertidos para parquet `/processed`
 - Para dados já processados, mas mantendo seu formato original `/archive`
-![imagem_3.2](./.docs/imgs/3.2.png)
+![imagem_3.2](./src/imgs/3.2.png)
 
 # Script python não encontrando dados no Data Lake do Amazon S3 
-![imagem_4](./.docs/imgs/4.png)
+![imagem_4](./src/imgs/4.png)
