@@ -3,10 +3,11 @@ import sys
 import glob
 from datetime import datetime
 from dotenv import load_dotenv
-from utils.get_s3_client import get_s3_client
 
-# Garante que o diretório atual está no path para importações locais
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+# Adiciona o diretório src ao path para permitir a importação de utils
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from utils.get_s3_client import get_s3_client
 
 load_dotenv()
 
