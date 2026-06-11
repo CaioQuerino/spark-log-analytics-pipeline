@@ -1,4 +1,9 @@
 import os
+import sys
+
+# Adiciona o diretório src ao path para permitir a importação de utils
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType, TimestampType
 from pyspark.sql.functions import col, when, lower
 from utils.initialize_spark import initialize_spark
