@@ -19,12 +19,15 @@ def check_for_new_data(bucket_name, prefix):
     
     if 'Contents' in response:
         # Filtra apenas arquivos .csv que não sejam a própria pasta
-        files = [obj['Key'] for obj in response['Contents'] if obj['Key'].endswith('.csv')]
+        files = [
+            obj['Key'] for obj in response['Contents']
+            if obj['Key'].endswith('.csv')
+        ]
         return files
     return []
 
 def move_file_to_archive(bucket_name, file_key):
-    """Move o arquivo processado para uma pasta de archive para evitar re-processamento"""
+    """Move o arquivo processado para evitar re-processamento"""
     s3 = get_s3_client()
     copy_source = {'Bucket': bucket_name, 'Key': file_key}
     new_key = file_key.replace("raw/", "archive/")
@@ -47,11 +50,12 @@ def run_orchestration():
         print("✨ Nada novo para processar. Encerrando.")
         return
 
-    print(f"🚀 {len(new_files)} novos arquivos detectados. Iniciando Spark Job...")
-    
+    msg = f"🚀 {len(new_files)} novos arquivos detectados. Iniciando Spark..."
+    print(msg)
+
     try:
         # 2. Chamar o Job do Spark (Lab 02)
-        # Nota: O Lab 02 lê s3a://.../*.csv, então ele processará os arquivos que listamos
+        # O Lab 02 processará os arquivos CSV listados no prefixo
         run_lab_02()
         
         print("✅ Spark Job concluído com sucesso.")
