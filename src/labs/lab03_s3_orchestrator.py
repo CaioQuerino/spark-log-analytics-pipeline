@@ -1,22 +1,14 @@
-import boto3
 import os
 import sys
-from dotenv import load_dotenv
 
-# Adiciona o diretório src ao path para importar o lab02
+# Adiciona o diretório src ao path para importar utils e outros labs
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from dotenv import load_dotenv
+from utils.get_s3_client import get_s3_client
 from lab02_batch_process import run_lab_02
 
 load_dotenv()
-
-def get_s3_client():
-    """Inicializa o cliente S3 usando as credenciais do .env"""
-    return boto3.client (
-        's3',
-        aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
-        aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
-        region_name=os.getenv("AWS_REGION")
-    )
 
 def check_for_new_data(bucket_name, prefix):
     """Verifica se existem arquivos CSV na pasta raw"""
