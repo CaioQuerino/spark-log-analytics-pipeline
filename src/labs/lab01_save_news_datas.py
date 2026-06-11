@@ -11,6 +11,7 @@ from utils.get_s3_client import get_s3_client  # noqa: E402
 
 load_dotenv()
 
+
 def save_new_data(data_pattern: str):
     """
     Lê arquivos locais e faz o upload para o S3 com timestamp no nome.
@@ -23,7 +24,7 @@ def save_new_data(data_pattern: str):
 
     # Busca todos os arquivos que casam com o padrão (ex: src/data/*.csv)
     files = glob.glob(data_pattern)
-    
+
     if not files:
         print(f"⚠️ Nenhum arquivo encontrado em: {data_pattern}")
         return
@@ -43,6 +44,8 @@ def save_new_data(data_pattern: str):
         except Exception as e:
             print(f"❌ Erro ao subir {file_path}: {str(e)}")
 
+
 if __name__ == "__main__":
-    data_path = os.path.join("src", "data", "*.csv")
+    # Ajustado para o path correto do projeto
+    data_path = os.path.join("synapos", "data", "*.csv")
     save_new_data(data_path)
