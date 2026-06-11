@@ -12,9 +12,9 @@ from lab02_batch_process import run_lab_02  # noqa: E402
 load_dotenv()
 
 
-def check_for_new_data(bucket_name, prefix):
+def check_for_new_data(s3, bucket_name, prefix):
     """Verifica se existem arquivos CSV na pasta raw"""
-    s3 = get_s3_client()
+    # Reutiliza o cliente passado por parâmetro
     print(f"🔍 Verificando novos dados em s3://{bucket_name}/{prefix}")
 
     response = s3.list_objects_v2(Bucket=bucket_name, Prefix=prefix)
@@ -29,11 +29,10 @@ def check_for_new_data(bucket_name, prefix):
     return []
 
 
-def move_file_to_archive(bucket_name, file_key):
+def move_file_to_archive(s3, bucket_name, file_key):
     """Move o arquivo processado para evitar re-processamento"""
-    s3 = get_s3_client()
     copy_source = {'Bucket': bucket_name, 'Key': file_key}
-    new_key = file_key.replace("raw/", "archive/")
+    new_key = file_key.replace("raw/logs/", "archive/logs/", 1)
 
     print(f"📦 Movendo {file_key} para {new_key}...")
 
@@ -44,11 +43,12 @@ def move_file_to_archive(bucket_name, file_key):
 
 
 def run_orchestration():
+    s3 = get_s3_client()
     bucket_name = os.getenv("S3_BUCKET_NAME")
     raw_prefix = "raw/logs/"
 
     # 1. Verificar se há trabalho a ser feito
-    new_files = check_for_new_data(bucket_name, raw_prefix)
+    new_files = check_for_new_data(s3, bucket_name, raw_prefix)
 
     if not new_files:
         print("✨ Nada novo para processar. Encerrando.")
@@ -61,12 +61,12 @@ def run_orchestration():
         # 2. Chamar o Job do Spark (Lab 02)
         # O Lab 02 processará os arquivos CSV listados no prefixo
         run_lab_02()
-        
+
         print("✅ Spark Job concluído com sucesso.")
-        
+
         # 3. Pós-processamento com Boto3: Limpeza do Landing Zone
         for file_key in new_files:
-            move_file_to_archive(bucket_name, file_key)
+            move_file_to_archive(s3, bucket_name, file_key)
 
         print("🏁 Orquestração finalizada com sucesso.")
 

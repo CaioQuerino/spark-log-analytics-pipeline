@@ -47,5 +47,5 @@ def save_new_data(data_pattern: str):
 
 if __name__ == "__main__":
     # Ajustado para o path correto do projeto
-    data_path = os.path.join("src", "data", "*.csv")
+    data_path = os.path.join("synapos", "data", "*.csv")
     save_new_data(data_path)
