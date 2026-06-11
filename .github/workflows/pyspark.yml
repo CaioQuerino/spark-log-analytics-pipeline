@@ -16,8 +16,12 @@ jobs:
 
       - name: Instalar dependências
         run: |
-          pip install pyspark boto3 python-dotenv
+          pip install pyspark boto3 python-dotenv flake8
 
       - name: Verificar sintaxe
         run: |
           python -m compileall src
+
+      - name: Lint with flake8
+        run: |
+          flake8 src
