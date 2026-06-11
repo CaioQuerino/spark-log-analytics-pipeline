@@ -1,7 +1,7 @@
 import os
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType, TimestampType
 from pyspark.sql.functions import col, when, lower
-from lab01_autentication import initialize_spark
+from utils.initialize_spark import initialize_spark
 from dotenv import load_dotenv
 
 load_dotenv()

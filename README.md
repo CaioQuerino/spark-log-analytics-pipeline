@@ -40,9 +40,10 @@ O pipeline central deste projeto envolve os seguintes passos, ilustrados nas ima
 
 ## 📚 Progresso do Curso / Laboratórios
 
-O progresso detalhado de cada unidade teórica e laboratório prático pode ser acompanhado no arquivo:
+O progresso detalhado e a documentação completa podem ser acompanhados em:
 
--   [Plano de Ensino: Engenharia de Dados Distribuídos com PySpark e Boto3](./.docs/pyspark-boto3-course.md)
+-   [📖 Documentação Técnica](./docs/tech/index.md)
+-   [🎓 Plano de Ensino: PySpark & Boto3](./docs/pyspark-boto3-course.md)
 
 ## ⚙️ Configuração do Ambiente
 
