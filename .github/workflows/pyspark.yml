@@ -1,0 +1,23 @@
+name: PySpark Validation
+
+on:
+  pull_request:
+
+jobs:
+  spark-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependências
+        run: |
+          pip install pyspark boto3 python-dotenv
+
+      - name: Verificar sintaxe
+        run: |
+          python -m compileall src
