@@ -42,8 +42,8 @@ O pipeline central deste projeto envolve os seguintes passos, ilustrados nas ima
 
 O progresso detalhado e a documentação completa podem ser acompanhados em:
 
--   [📖 Documentação Técnica](./docs/tech/index.md)
--   [🎓 Plano de Ensino: PySpark & Boto3](./docs/pyspark-boto3-course.md)
+-   [📖 Documentação Técnica](./.docs/tech/index.md)
+-   [🎓 Plano de Ensino: PySpark & Boto3](./.docs/learning/pyspark-boto3-course.md)
 
 ## ⚙️ Configuração do Ambiente
 
